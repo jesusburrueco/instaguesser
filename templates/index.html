@@ -2,30 +2,33 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Instagram Info</title>
+    <title>InstaGuesser</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #fafafa; }
-        input { padding: 10px; font-size: 16px; }
-        button { padding: 10px 20px; font-size: 16px; }
-        img { max-width: 150px; border-radius: 50%; margin-top: 20px; }
-        .error { color: red; }
+        body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; }
+        img { border-radius: 50%; width: 150px; height: 150px; }
+        input, button { padding: 0.5rem; margin: 1rem; }
     </style>
 </head>
 <body>
-    <h1>Buscar usuario de Instagram</h1>
-    <form method="post">
-        <input type="text" name="username" placeholder="Nombre de usuario" required>
+    <h1>🎯 Categoría: {{ category }}</h1>
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="Introduce un usuario de Instagram" required>
+        <br>
         <button type="submit">Buscar</button>
     </form>
 
-    {% if error %}
-        <p class="error">{{ error }}</p>
+    {% if result %}
+        <h2>@{{ result.username }}</h2>
+        <p>👥 Seguidores: {{ result.followers }}</p>
+        <img src="{{ result.profile_pic }}" alt="Foto de perfil">
     {% endif %}
 
-    {% if followers %}
-        <h2>@{{ username }}</h2>
-        <p><strong>Seguidores:</strong> {{ followers }}</p>
-        <img src="{{ profile_pic }}" alt="Foto de perfil">
-    {% endif %}
+    <hr>
+    <h3>Añadir nueva categoría</h3>
+    <form method="POST">
+        <input type="text" name="new_category" placeholder="Nueva categoría" required>
+        <button type="submit">Agregar</button>
+    </form>
 </body>
 </html>

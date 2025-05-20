@@ -56,8 +56,10 @@ def index():
                         "profile_pic": data[0].get("profilePicUrlHD")
                     }
 
-    return render_template("index.html", category=selected_category, result=result)
-
+    return render_template("index.html", category=selected_category, result=result,
+                       followers=result.get('followers') if result else None,
+                       profile_pic=result.get('profile_pic') if result else None,
+                       error=error if 'error' in locals() else None)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

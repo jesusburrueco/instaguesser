@@ -1,34 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="utf-8">
     <title>InstaGuesser</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; }
-        img { border-radius: 50%; width: 150px; height: 150px; }
-        input, button { padding: 0.5rem; margin: 1rem; }
-    </style>
-</head>
-<body>
-    <h1>🎯 Categoría: {{ category }}</h1>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <form method="POST">
-        <input type="text" name="username" placeholder="Introduce un usuario de Instagram" required>
-        <br>
-        <button type="submit">Buscar</button>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      body {
+        padding: 2rem;
+      }
+      img {
+        max-width: 150px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">InstaGuesser</h1>
+
+    <form method="POST" class="mb-3">
+      <div class="mb-3">
+        <label for="category" class="form-label">Categoría aleatoria:</label>
+        <input type="text" id="category" name="category" class="form-control" value="{{ category }}" readonly>
+      </div>
+      <div class="mb-3">
+        <label for="username" class="form-label">Usuario de Instagram:</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="ej. elxokas" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Buscar</button>
     </form>
 
-    {% if result %}
-        <h2>@{{ result.username }}</h2>
-        <p>👥 Seguidores: {{ result.followers }}</p>
-        <img src="{{ result.profile_pic }}" alt="Foto de perfil">
+    {% if followers and profile_pic %}
+      <div class="card text-center">
+        <div class="card-body">
+          <img src="{{ profile_pic }}" alt="Foto de perfil" class="mb-3">
+          <h5 class="card-title">Seguidores: {{ followers }}</h5>
+        </div>
+      </div>
+    {% elif error %}
+      <div class="alert alert-danger mt-3">{{ error }}</div>
     {% endif %}
 
-    <hr>
-    <h3>Añadir nueva categoría</h3>
-    <form method="POST">
-        <input type="text" name="new_category" placeholder="Nueva categoría" required>
-        <button type="submit">Agregar</button>
+    <hr class="my-4">
+
+    <form method="POST" action="/add-category">
+      <div class="mb-3">
+        <label for="new_category" class="form-label">Agregar nueva categoría:</label>
+        <input type="text" id="new_category" name="new_category" class="form-control" placeholder="Nueva categoría" required>
+      </div>
+      <button type="submit" class="btn btn-success">Añadir</button>
     </form>
+  </div>
 </body>
 </html>
